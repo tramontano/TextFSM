@@ -24,7 +24,7 @@ Start
   ^(-+|Hold|[Vv]ersion|.*[vV]ersion|Duplex)
   ^$$
   #^.* -> End
-  ^.* -> Error
+  #^.* -> Error
 
 ParseIP
   ^\s+IP\s+address:\s+${REMOTE_MGMT_IP} -> Start

@@ -1,4 +1,3 @@
-# AP Template
 Value Filldown WLC (\S+) 
 Value HOST (\S+)
 Value LOCAL_PORT (.*)

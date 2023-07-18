@@ -1,0 +1,24 @@
+# IOS template
+Value Filldown HOST (\S+)
+Value LOCAL_PORT (.*)
+Value Required REMOTE_HOST (\S+)
+Value REMOTE_PORT (.*)
+Value MANAGEMENT_IP (\d+\.\d+\.\d+\.\d+|\w+\.\w+\.\w+)
+Value PLATFORM (.*)
+#Value SOFTWARE_VERSION ((\d[\d\.\(\)MTDaSXHJWbEAGFBYIN\-]{3,12})|(.*)\s+\d[^\s+]{3,}|(.*)|Releasebuild\-\d*)
+
+Start
+  ^${HOST}#$$
+  ^Device\s+ID:\s+${REMOTE_HOST}
+  ^Entry\s+address\(es\)\s*:\s*
+  #-> ParseIP
+  ^Management\s+address\(es\)\s*:\s*
+  #-> ParseIP
+  ^Platform(?:\s+|):\s+${PLATFORM}(?:\s+|),.*$$
+  ^\s+IP\s+[aA]ddress:\s+${MANAGEMENT_IP}
+  ^.*IP address: ${MANAGEMENT_IP}
+  ^Interface:\s+${LOCAL_PORT},\s+Port\s+ID\s+\(outgoing port\):\s+${REMOTE_PORT} -> Record
+  ^Version\s+:
+  #-> GetVersion
+  ^.*
+  ^.* -> Error

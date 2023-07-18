@@ -1,0 +1,26 @@
+# EOS template
+Value Filldown HOST (\S+)
+Value Filldown LOCAL_PORT (\S+?)
+Value Required REMOTE_HOST (\S+)
+Value REMOTE_PORT (.+?)
+Value REMOTE_MGMT_IP (.+?)
+Value REMOTE_PLATFORM (.*)
+#Value SOFTWARE_VERSION (\d([^\s,]+)|build\-\d*)
+
+Start
+  ^${HOST}#$$
+  ^\S+\s+${LOCAL_PORT}\s+\S+\s+.*
+  ^.*age\s+(?:.+?)$$ -> Interface
+
+Interface
+  ^\s+Chassis ID\s+:\s+(?:)$$
+  ^\s+-\s+Port ID type -> Port_ID
+  ^\s+-\s+\S+\s+Name:\s+"${REMOTE_HOST}"
+  ^^\s+\-\s+System\s+Description\:\s+"${REMOTE_PLATFORM}(?:Software|version|Version|Release)(?:\s+|).*(?:.*"|$$)
+  ^\s+\S+\s+Address\s+:\s+${REMOTE_MGMT_IP}$$
+  ^\s*$$ -> Record Start
+
+Port_ID
+  ^\s+Port ID\s+:(\s+"|\s+)${REMOTE_PORT}("|$$) -> Interface
+  ^.*
+#  -> Error

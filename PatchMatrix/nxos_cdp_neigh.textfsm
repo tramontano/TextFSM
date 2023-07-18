@@ -1,0 +1,43 @@
+# NXOS template
+Value Filldown HOST (\S+)
+Value LOCAL_PORT (.*)
+Value Required REMOTE_HOST (.*)
+Value REMOTE_PORT (.*)
+Value REMOTE_MGMT_IP (.*)
+Value REMOTE_PLATFORM (.*)
+
+Start
+  ^${HOST}#$$
+  ^${HOST}#show cdp neighbor detail
+  ^Device ID -> Continue.Record
+  ^Device ID:${REMOTE_HOST}
+  ^System Name: (.*)
+  ^(Interface|Entry)\s+address\(es\):\s+(^[1-9]\d*|$$) -> GetInterfaceIP
+  ^Mgmt address\(es\): -> GetIP
+  ^Platform:\s+${REMOTE_PLATFORM},\s+Capabilities: (.*[^\s])\s*$$
+  ^Interface:\s+${LOCAL_PORT},\s+Port ID \(outgoing port\): ${REMOTE_PORT}
+  ^Version(|\s+):
+  ^$$
+  ^\-+$$
+  ^Advertisement\s+Version.*$$
+  ^Holdtime.*$$
+  ^Native\s+VLAN.*$$
+  ^Duplex.*$$
+  ^MTU.*$$
+  ^Physical\s+Location.*$$
+  ^VTP\s+Management\s+Domain.*$$
+  ^Technical\s+Support.*$$
+  ^Copyright.*$$
+  ^Compiled.*$$
+  ^.*
+  ^.* -> Error
+
+GetIP
+  ^.*ddress:\s+${REMOTE_MGMT_IP}$$ -> Start
+  ^.*
+#  -> Error
+
+GetInterfaceIP
+  ^.*ddress:\s+${REMOTE_MGMT_IP} -> Start
+  ^.*
+#  -> Error

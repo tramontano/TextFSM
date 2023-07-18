@@ -1,6 +1,6 @@
 # AP Template
 Value Filldown WLC (\S+) 
-Value Required HOST (\S+)
+Value HOST (\S+)
 Value LOCAL_PORT (.*)
 Value REMOTE_HOST (\S+)
 Value REMOTE_PORT (.*)

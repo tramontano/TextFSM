@@ -1,15 +1,20 @@
 # AP Template
+Value Filldown WLC (\S+) 
 Value Required HOST (\S+)
 Value LOCAL_PORT (.*)
 Value REMOTE_HOST (\S+)
-Value Required REMOTE_PORT (.*)
+Value REMOTE_PORT (.*)
 Value REMOTE_MGMT_IP (\d+\.\d+\.\d+\.\d+|\w+\.\w+\.\w+)
 Value REMOTE_PLATFORM (.*)
-Value Filldown WLC (\S+)
 
 Start
   ^${WLC}#$$
   ^\(${WLC}\)\s+>$$
+  ^\(${WLC}\)\s+
+  ^User
+  ^Passw
+  ^The system
+  ^Would you like
   ^AP\s+Name(?:\s+|):(?:\s+|)${HOST}$$
   ^AP\s+IP\s+address
   ^Device\s+ID(?:\s+|):\s+${REMOTE_HOST}$$
@@ -18,8 +23,8 @@ Start
   ^Interface(?:\s+|):\s+${LOCAL_PORT},\s+Port\s+ID\s+\(outgoing\s+port\)(?:\s+|):\s+${REMOTE_PORT}$$
   ^(-+|Hold|[Vv]ersion|.*[vV]ersion|Duplex)
   ^$$
-  ^.* -> End
+  #^.* -> End
   ^.* -> Error
 
 ParseIP
-  ^\s+IP\s+address:\s+${REMOTE_MGMT_IP} -> Record Start
+  ^\s+IP\s+address:\s+${REMOTE_MGMT_IP} -> Start

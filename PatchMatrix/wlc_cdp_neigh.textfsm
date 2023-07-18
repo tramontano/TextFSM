@@ -1,5 +1,5 @@
 # AP Template
-Value Filldown WLC (\S+) 
+#Value Filldown WLC (\S+) 
 Value HOST (\S+)
 Value LOCAL_PORT (.*)
 Value REMOTE_HOST (\S+)
@@ -8,9 +8,9 @@ Value REMOTE_MGMT_IP (\d+\.\d+\.\d+\.\d+|\w+\.\w+\.\w+)
 Value REMOTE_PLATFORM (.*)
 
 Start
-  ^${WLC}#$$
-  ^\(${WLC}\)\s+>$$
-  ^\(${WLC}\)\s+
+  #^${WLC}#$$
+  #^\(${WLC}\)\s+>$$
+  #^\(${WLC}\)\s+
   ^User
   ^Passw
   ^The system
